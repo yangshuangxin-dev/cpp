@@ -282,7 +282,7 @@ class Solution8
 {
     vector<vector<int>> printTree;
 
-    vector<vector<int>> printTree(TreeNode *root)
+    vector<vector<int>> PrintTree(TreeNode *root)
     {
         printTree.clear();
         if (!root)

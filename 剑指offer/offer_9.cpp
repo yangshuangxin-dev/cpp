@@ -1,4 +1,4 @@
-#include <bits\stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct TreeNode
@@ -237,7 +237,7 @@ class Solution7
         buf.clear();
         if (!root)
         {
-            return "";
+            return nullptr;
         }
 
         dfsTree(root);
@@ -1055,6 +1055,7 @@ class Solution33
 //数组中的逆序
 class Solution34
 {
+    private:
     int ans = 0;
     int InvdersdeParse(vector<int> data)
     {
@@ -1328,7 +1329,7 @@ class Solution42
         }
         else
         {
-            for (int i = k; i < str.size(); i++)
+            for (unsigned i = k; i < str.size(); i++)
             {
                 swap(str[i], str[k]);
                 findAllStr(str, k + 1);
@@ -1840,3 +1841,214 @@ class Sloution60
     }
 };
 
+//20200103
+//旋转数组的最小值
+class Solution61
+{
+    int minNumberInRoteArray(vector<int> array)
+    {
+        if(array.empty())
+        {
+            return 0;
+        }
+
+        int left=0,right=array.size()-1;
+        while(left<right)
+        {
+            if(array[left]<array[right])
+            {
+                return array[left];
+            }
+            int mid=left+(right-left)/2;
+            if(array[mid]>array[left])
+            {
+                left=mid+1;
+            }
+            else if(array[mid]<array[right])
+            {
+                right=mid;
+            }
+            else
+            {
+                left++;
+            }
+            
+        }
+
+        return array[left];
+    }
+};
+
+//斐波那契数列
+class Solution62
+{
+    int Fibonacci(int n)
+    {
+        if(n<=0)
+        {
+            return 0;
+        }
+
+        int a=1,b=1;
+        for(int i=2;i<n;i++)
+        {
+            int tmp=a+b;
+            a=b;
+            b=tmp;
+        }
+
+        return b;
+    }
+};
+
+//重建二叉树
+class Solution63
+{
+    TreeNode *ReConstBinaryTree(vector<int> pre,vector<int> vin)
+    {
+        if(pre.empty()||vin.empty())
+        {
+            return nullptr;
+        }
+
+        auto root=reTree(pre,0,pre.size()-1,vin,0,vin.size()-1);
+        return root;
+    }
+
+    TreeNode* reTree(vector<int> pre,int preStart,int preEnd,vector<int> vin,int vinStart,int vinEnd)
+    {
+        if(preStart>preEnd||vinStart>vinEnd)
+        {
+            return nullptr;
+        }
+
+        auto root = new TreeNode(pre[preStart]);
+        for(int i=vinStart;i<=vinEnd;i++)
+        {
+            if(root->val==vin[i])
+            {
+                root->left=reTree(pre,preStart+1,preStart+i-vinStart,vin,vinStart,i-1);
+                root->right=reTree(pre,preStart+i-vinStart+1,preEnd,vin,i+1,vinEnd);
+                break;
+            }
+
+            
+        }
+        return root;
+    }
+};
+
+
+//栈模拟队列
+class Solution64
+{
+    stack<int> st1,st2;
+
+    void push(int x)
+    {
+        st1.push(x);
+    }
+
+    int pop()
+    {
+        if(st2.empty())
+        {
+            while(st1.size())
+            {
+                st2.push(st1.top());
+                st1.pop();
+            }
+        }
+
+        int tmp=st2.top();
+        st2.pop();
+        return tmp;
+    }
+};
+
+//空格替换
+class Solution65
+{
+    void replaceSpace(char *str,int length)
+    {
+        int count=0;
+        for(int i=0;i<length;i++)
+        {
+            if(str[i]==' ')
+            {
+                count++;
+            }
+        }
+
+        for(int i=length-1;i>=0;i--)
+        {
+            if(str[i]!=' ')
+            {
+                str[i+2*count]=str[i];
+            }
+            else
+            {
+                count--;
+                str[i+2*count]='%';
+                str[i+2*count+1]='2';
+                str[i+2*count+2]='0';
+            }
+
+
+            
+        }
+
+        return;
+    }
+};
+
+
+//返回链表的倒序
+class Solution66
+{
+    vector<int> printListFromTailToHead(ListNode *head)
+    {
+        vector<int> res;
+        while(head)
+        {
+            res.emplace_back(head->val);
+            head=head->next;
+        }
+
+        int i=0,j=res.size()-1;
+        while(i<j)
+        {
+            swap(res[i++],res[j--]);
+        }
+
+        return res;
+    }
+};
+
+//返回链表的倒序
+class Solution67
+{
+    bool FindInMatrix(int target,vector<vector<int>> matrix)
+    {
+        if(matrix.empty())
+        {
+            return false;
+        }
+
+        int rows=matrix.size();
+        int cols=matrix[0].size();
+        for(int i=rows,j=0;i>=0&&j<cols;)
+        {
+            if(matrix[i][j]==target)
+            {
+                return true;
+            }
+            else
+            {
+                target<matrix[i][j]?i--:j++;
+            }
+        }
+
+        return false;
+    }
+};
