@@ -1,16 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 struct TreeNode
 {
     int val;
     struct TreeNode *left, *right;
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
-
 //切绳子
 class Solution1
 {
+public:
     int cutRope(int number)
     {
         int max = 1;
@@ -65,6 +64,7 @@ class Solution2
 //机器人走格子
 class Solution3
 {
+public:
     int movingCount(int threshild, int rows, int cols)
     {
         if (threshild <= 0 || rows <= 0 || cols <= 0)
@@ -104,6 +104,7 @@ class Solution3
 //矩阵查找字符串
 class Solution4
 {
+public:
     bool hasPath(char *matrix, int rows, int cols, char *str)
     {
         if (!matrix || rows <= 0 || cols <= 0 || !str)
@@ -162,7 +163,7 @@ class Solution5
         vector<int> res;
         deque<int> tmp;
 
-        for (int i = 0; i < num.size(); i++)
+        for (unsigned i = 0; i < num.size(); i++)
         {
             while (tmp.size() && num[tmp.back()] < num[i])
             {
@@ -242,6 +243,10 @@ class Solution7
 
         dfsTree(root);
         int *res = new int[buf.size()];
+        for (int i = 0; i < buf.size(); i++)
+        {
+            res[i] = buf[i];
+        }
         return (char *)res;
     }
 
@@ -1014,7 +1019,7 @@ class Solution32
         while (i <= k)
         {
             int mid = i + (j - i) / 2;
-            if (data[mid] > i)
+            if (data[mid] <k )
             {
                 i = mid;
             }
@@ -1055,7 +1060,7 @@ class Solution33
 //数组中的逆序
 class Solution34
 {
-    private:
+private:
     int ans = 0;
     int InvdersdeParse(vector<int> data)
     {
@@ -1417,7 +1422,6 @@ class Solution44
     }
 };
 
-//按层打印二叉树
 class Solution45
 {
     vector<int> PrintFromTopBottom(TreeNode *root)
@@ -1747,13 +1751,13 @@ class Solution56
 {
     void reOrserArray(vector<int> &array)
     {
-        for(int i=0;i<array.size();i++)
+        for (int i = 0; i < array.size(); i++)
         {
-            for(int j=array.size()-1;j>i;j--)
+            for (int j = array.size() - 1; j > i; j--)
             {
-                if(array[j]%2==1&&array[j-1]%2==0)
+                if (array[j] % 2 == 1 && array[j - 1] % 2 == 0)
                 {
-                    swap(array[j],array[j-1]);
+                    swap(array[j], array[j - 1]);
                 }
             }
         }
@@ -1766,22 +1770,22 @@ class Solution57
 {
     int rectCover(int number)
     {
-        if(number<=0)
+        if (number <= 0)
         {
             return 0;
         }
 
-        if(number<=2)
+        if (number <= 2)
         {
             return number;
         }
 
-        int a=1,b=2;
-        for(int i=2;i<number;i++)
+        int a = 1, b = 2;
+        for (int i = 2; i < number; i++)
         {
-            int tmp=a+b;
-            a=b;
-            b=tmp;
+            int tmp = a + b;
+            a = b;
+            b = tmp;
         }
 
         return b;
@@ -1793,39 +1797,38 @@ class Solution58
 {
     int NumberOf1(int n)
     {
-        int count=0;
-        while(n)
+        int count = 0;
+        while (n)
         {
             count++;
-            n&=(n-1);
+            n &= (n - 1);
         }
 
         return count;
     }
 };
 
-
 //能跳1、2级的青蛙
 class Solution59
 {
     int jumpFloor(int number)
     {
-        if(number<0)
+        if (number < 0)
         {
             return 0;
         }
 
-        if(number<=2)
+        if (number <= 2)
         {
             return number;
         }
 
-        int a=1,b=2;
-        for(int i=2;i<number;i++)
+        int a = 1, b = 2;
+        for (int i = 2; i < number; i++)
         {
-            int tmp=a+b;
-            a=b;
-            b=tmp;
+            int tmp = a + b;
+            a = b;
+            b = tmp;
         }
 
         return b;
@@ -1837,7 +1840,7 @@ class Sloution60
 {
     int jumpFloor(int number)
     {
-        return 1<<(number-1);
+        return 1 << (number - 1);
     }
 };
 
@@ -1847,32 +1850,31 @@ class Solution61
 {
     int minNumberInRoteArray(vector<int> array)
     {
-        if(array.empty())
+        if (array.empty())
         {
             return 0;
         }
 
-        int left=0,right=array.size()-1;
-        while(left<right)
+        int left = 0, right = array.size() - 1;
+        while (left < right)
         {
-            if(array[left]<array[right])
+            if (array[left] < array[right])
             {
                 return array[left];
             }
-            int mid=left+(right-left)/2;
-            if(array[mid]>array[left])
+            int mid = left + (right - left) / 2;
+            if (array[mid] > array[left])
             {
-                left=mid+1;
+                left = mid + 1;
             }
-            else if(array[mid]<array[right])
+            else if (array[mid] < array[right])
             {
-                right=mid;
+                right = mid;
             }
             else
             {
                 left++;
             }
-            
         }
 
         return array[left];
@@ -1884,17 +1886,17 @@ class Solution62
 {
     int Fibonacci(int n)
     {
-        if(n<=0)
+        if (n <= 0)
         {
             return 0;
         }
 
-        int a=1,b=1;
-        for(int i=2;i<n;i++)
+        int a = 1, b = 1;
+        for (int i = 2; i < n; i++)
         {
-            int tmp=a+b;
-            a=b;
-            b=tmp;
+            int tmp = a + b;
+            a = b;
+            b = tmp;
         }
 
         return b;
@@ -1904,45 +1906,42 @@ class Solution62
 //重建二叉树
 class Solution63
 {
-    TreeNode *ReConstBinaryTree(vector<int> pre,vector<int> vin)
+    TreeNode *ReConstBinaryTree(vector<int> pre, vector<int> vin)
     {
-        if(pre.empty()||vin.empty())
+        if (pre.empty() || vin.empty())
         {
             return nullptr;
         }
 
-        auto root=reTree(pre,0,pre.size()-1,vin,0,vin.size()-1);
+        auto root = reTree(pre, 0, pre.size() - 1, vin, 0, vin.size() - 1);
         return root;
     }
 
-    TreeNode* reTree(vector<int> pre,int preStart,int preEnd,vector<int> vin,int vinStart,int vinEnd)
+    TreeNode *reTree(vector<int> pre, int preStart, int preEnd, vector<int> vin, int vinStart, int vinEnd)
     {
-        if(preStart>preEnd||vinStart>vinEnd)
+        if (preStart > preEnd || vinStart > vinEnd)
         {
             return nullptr;
         }
 
         auto root = new TreeNode(pre[preStart]);
-        for(int i=vinStart;i<=vinEnd;i++)
+        for (int i = vinStart; i <= vinEnd; i++)
         {
-            if(root->val==vin[i])
+            if (root->val == vin[i])
             {
-                root->left=reTree(pre,preStart+1,preStart+i-vinStart,vin,vinStart,i-1);
-                root->right=reTree(pre,preStart+i-vinStart+1,preEnd,vin,i+1,vinEnd);
+                root->left = reTree(pre, preStart + 1, preStart + i - vinStart, vin, vinStart, i - 1);
+                root->right = reTree(pre, preStart + i - vinStart + 1, preEnd, vin, i + 1, vinEnd);
                 break;
             }
-
-            
         }
         return root;
     }
 };
 
-
 //栈模拟队列
 class Solution64
 {
-    stack<int> st1,st2;
+    stack<int> st1, st2;
 
     void push(int x)
     {
@@ -1951,16 +1950,16 @@ class Solution64
 
     int pop()
     {
-        if(st2.empty())
+        if (st2.empty())
         {
-            while(st1.size())
+            while (st1.size())
             {
                 st2.push(st1.top());
                 st1.pop();
             }
         }
 
-        int tmp=st2.top();
+        int tmp = st2.top();
         st2.pop();
         return tmp;
     }
@@ -1969,39 +1968,35 @@ class Solution64
 //空格替换
 class Solution65
 {
-    void replaceSpace(char *str,int length)
+    void replaceSpace(char *str, int length)
     {
-        int count=0;
-        for(int i=0;i<length;i++)
+        int count = 0;
+        for (int i = 0; i < length; i++)
         {
-            if(str[i]==' ')
+            if (str[i] == ' ')
             {
                 count++;
             }
         }
 
-        for(int i=length-1;i>=0;i--)
+        for (int i = length - 1; i >= 0; i--)
         {
-            if(str[i]!=' ')
+            if (str[i] != ' ')
             {
-                str[i+2*count]=str[i];
+                str[i + 2 * count] = str[i];
             }
             else
             {
                 count--;
-                str[i+2*count]='%';
-                str[i+2*count+1]='2';
-                str[i+2*count+2]='0';
+                str[i + 2 * count] = '%';
+                str[i + 2 * count + 1] = '2';
+                str[i + 2 * count + 2] = '0';
             }
-
-
-            
         }
 
         return;
     }
 };
-
 
 //返回链表的倒序
 class Solution66
@@ -2009,16 +2004,16 @@ class Solution66
     vector<int> printListFromTailToHead(ListNode *head)
     {
         vector<int> res;
-        while(head)
+        while (head)
         {
             res.emplace_back(head->val);
-            head=head->next;
+            head = head->next;
         }
 
-        int i=0,j=res.size()-1;
-        while(i<j)
+        int i = 0, j = res.size() - 1;
+        while (i < j)
         {
-            swap(res[i++],res[j--]);
+            swap(res[i++], res[j--]);
         }
 
         return res;
@@ -2028,24 +2023,24 @@ class Solution66
 //返回链表的倒序
 class Solution67
 {
-    bool FindInMatrix(int target,vector<vector<int>> matrix)
+    bool FindInMatrix(int target, vector<vector<int>> matrix)
     {
-        if(matrix.empty())
+        if (matrix.empty())
         {
             return false;
         }
 
-        int rows=matrix.size();
-        int cols=matrix[0].size();
-        for(int i=rows,j=0;i>=0&&j<cols;)
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+        for (int i = rows, j = 0; i >= 0 && j < cols;)
         {
-            if(matrix[i][j]==target)
+            if (matrix[i][j] == target)
             {
                 return true;
             }
             else
             {
-                target<matrix[i][j]?i--:j++;
+                target < matrix[i][j] ? i-- : j++;
             }
         }
 
