@@ -2020,7 +2020,7 @@ class Solution66
     }
 };
 
-//返回链表的倒序
+//矩阵查找元素
 class Solution67
 {
     bool FindInMatrix(int target, vector<vector<int>> matrix)
@@ -2032,7 +2032,7 @@ class Solution67
 
         int rows = matrix.size();
         int cols = matrix[0].size();
-        for (int i = rows, j = 0; i >= 0 && j < cols;)
+        for (int i = rows-1, j = 0; i >= 0 && j < cols;)
         {
             if (matrix[i][j] == target)
             {
