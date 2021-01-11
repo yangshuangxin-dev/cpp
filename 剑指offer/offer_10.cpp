@@ -2095,7 +2095,7 @@ class Solution66
             head=head->next;
         }
 
-        res.reserve();
+        res.reserve(res.size());
         return res;
     }
 };
