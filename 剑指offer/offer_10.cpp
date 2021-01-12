@@ -636,7 +636,7 @@ public:
             check(++str, flag);
         }
 
-        if (flag && (*str == 'e' || *str == '-'))
+        if (flag && (*str == 'e' || *str == 'E'))
         {
             str++;
             flag = false;

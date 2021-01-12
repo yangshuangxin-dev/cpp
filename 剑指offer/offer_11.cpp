@@ -407,3 +407,280 @@ struct TreeLinkNode
     struct TreeLinkNode *left, *right, *next;
     TreeLinkNode(int x) : val(x), left(nullptr), next(nullptr) {}
 };
+
+class Solution11
+{
+    TreeLinkNode *GetNext(TreeLinkNode *pNode)
+    {
+        if (!pNode)
+        {
+            return nullptr;
+        }
+
+        if (pNode->right)
+        {
+            pNode = pNode->right;
+            while (pNode->left)
+            {
+                pNode = pNode->left;
+            }
+            return pNode;
+        }
+
+        while (pNode->next)
+        {
+            if (pNode->next->left == pNode)
+            {
+                return pNode->next;
+            }
+            pNode = pNode->next;
+        }
+
+        return nullptr;
+    }
+};
+
+struct ListNode
+{
+    int val;
+    struct ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+
+class Solution12
+{
+    ListNode *deleteDuplication(ListNode *pNode)
+    {
+        if (!pNode || !pNode->next)
+        {
+            return pNode;
+        }
+
+        auto head = new ListNode(-1);
+        head->next = pNode;
+        auto pre = head, last = pre->next;
+
+        while (last)
+        {
+            if (last->next && last->val == last->next->val)
+            {
+                while (last->next && last->val == last->next->val)
+                {
+                    auto tmp = last->next;
+                    last->next = tmp->next;
+                    delete tmp;
+                }
+
+                pre->next = last->next;
+                delete last;
+                last = pre->next;
+            }
+            else
+            {
+                pre = pre->next;
+                last = last->next;
+            }
+        }
+
+        pNode = head->next;
+        delete head;
+        return pNode;
+    }
+};
+
+//出现一次的字符
+class Solution13
+{
+    vector<int> str;
+    int hash[256] = {0};
+
+    void Insert(char ch)
+    {
+        str.emplace_back(ch);
+        hash[ch]++;
+    }
+
+    char FirstAppearingOnce()
+    {
+        for (auto i : str)
+        {
+            if (hash[i] == 1)
+            {
+                return i;
+            }
+        }
+
+        return '#';
+    }
+};
+
+//找出链表的环
+class Solution14
+{
+    ListNode *EntryNodeLoop(ListNode *pHead)
+    {
+        if (!pHead)
+        {
+            return nullptr;
+        }
+
+        auto p1 = pHead, p2 = p1;
+        while (p2->next)
+        {
+            p1 = p1->next;
+            p2 = p2->next->next;
+            if (p1 == p2)
+            {
+                break;
+            }
+        }
+        if (!p2->next)
+        {
+            return nullptr;
+        }
+
+        p1 = pHead;
+        while (p1 != p2)
+        {
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        return p1;
+    }
+};
+
+class Solution15
+{
+    bool match(char *str,char *pattern)
+    {
+        if(!str||!pattern)
+        {
+            return false;
+        }
+
+        if(!*pattern)
+        {
+            return !*str;
+        }
+
+        if(*(pattern+1)=='*')
+        {
+            return match(str,pattern+2)||
+            (*str==*pattern||*str&&*pattern=='.')&&match(str+1,pattern);
+        }
+
+        return (*str==*pattern||*str&&*pattern=='.')&&match(str+1,pattern+1);
+    }
+};
+
+class Solution16
+{
+    bool isNumber(char *str)
+    {
+        if(!str)
+        {
+            return false;
+        }
+
+        if(*str=='+'||*str=='-')
+        {
+            str++;
+        }
+
+        bool flag=false;
+        check(str,flag);
+
+        if(*str=='.')
+        {
+            check(++str,flag);
+        }
+
+        if(flag&&(*str=='e'||*str=='E'))
+        {
+            str++;
+            flag=false;
+            if(*str=='+'||*str=='-')
+            {
+                str++;
+            }
+
+            check(str,flag);
+        }
+
+        return flag&&*str;
+    }
+
+    void check(char *&str,bool &flag)
+    {
+        while(isdigit(*str))
+        {
+            flag=true;
+            str++;
+        }
+    }
+};
+
+
+
+class Solution18
+{
+    vector<int> multiply(vector<int> A)
+    {
+        vector<int> res;
+        res.emplace_back(1);
+        for(auto i:A)
+        {
+            res.emplace_back(i*res.back());
+        }
+        res.pop_back();
+
+        for(int i=A.size()-1,tmp=1;i>=0;i--)
+        {
+            res[i]*=tmp;
+            tmp*=A[i];
+        }
+
+        return res;
+    }
+};
+
+class Solution19
+{
+    int Add(int num1,int num2)
+    {
+        return num2?Add(num1^num2,(num1&num2)<<1):num1;
+    }
+};
+
+class Solution20
+{
+    int StrToInt(string str)
+    {
+        if(str.empty())
+        {
+            return 0;
+        }
+
+        long long res;
+        int flag=(str[0]=='-')?-1:1;
+        int i=(str[0]=='-'||str[0]=='+')?1:0;
+        for(;i<str.size();i++)
+        {
+            if(!(str[i]>='0'&&str[i]<='9'))
+            {
+                return 0;
+            }
+
+            res+=(res<<1)+(res<<3)+(str[i]&0xf);  
+        }
+
+        res*=flag;
+        if(res>INT_MAX||res<INT_MIN)
+        {
+            return 0;
+        }
+
+        return res;
+    }
+};
+
