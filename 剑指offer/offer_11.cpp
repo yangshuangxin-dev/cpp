@@ -684,3 +684,264 @@ class Solution20
     }
 };
 
+class Solution21
+{
+    int LastRemaing(int n,int m)
+    {
+        if(n==0)
+        {
+            return -1;
+        }
+
+        if(n==1)
+        {
+            return 0;
+        }
+
+        return (LastRemaing(n-1,m)+m)%n;
+
+
+    }
+};
+
+
+class Solution22
+{
+    int sum(int n)
+    {
+        return mul(n,n+1)/2;
+    }
+
+    int mul(int a,int b)
+    {
+        int res=0;
+        (a&1)&&(res+=b);
+        a>>=1;
+        b<<=1;
+        (a)&&(res+=mul(a,b));
+        return res;
+    }
+};
+
+class Solution23
+{
+    string ReverSentence(string str)
+    {
+        if(str.empty())
+        {
+            return str;
+        }
+
+        reStr(str,0,str.size()-1);
+
+        int i=0,start=0;
+        while(i<str.size())
+        {
+            while(i<str.size()&&str[i]==' ')
+            {
+                i++;
+            }
+
+            start=i;
+
+            while(i<str.size()&&str[i]!=' ')
+            {
+                i++;
+            }
+
+            reStr(str,start,i-1);
+        }
+
+        return str;
+    }
+
+    void reStr(string &str,int i,int j)
+    {
+        while(i<j)
+        {
+            swap(str[i++],str[j--]);
+        }
+    }
+};
+
+
+class Solution24
+{
+    bool IsContinous(vector<int> number)
+    {
+        if(number.empty())
+        {
+            return false;
+        }
+
+        char hash[14]={0};
+
+        int max=-1,min=14;
+        for(int i:number)
+        {
+            if(i==0)
+            {
+                continue;
+            }
+
+            if(++hash[i]>1)
+            {
+                return false;
+            }
+
+            max=max>i?max:i;
+            min=min<i?min:i;
+        }
+
+        return (max-min)<5;
+    }
+};
+
+
+class Solution25
+{
+    vector<int> FindNumbersWithSum(vector<int> array,int sum)
+    {
+        vector<int> res;
+
+        if(array.empty())
+        {
+            return res;
+        }
+
+        int left=0,right=array.size()-1;
+        while(left<right)
+        {
+            int tmp=array[left]+array[right];
+            if(tmp==sum)
+            {
+                res.emplace_back(array[left]);
+                res.emplace_back(array[right]);
+                break;
+            }
+            tmp<sum?left++:right--;
+        }
+
+        return res;
+    }
+};
+
+//循环左移
+class Solution26
+{
+    string leftRotateString(string str,int n)
+    {
+        if(str.empty()||n<=0)
+        {
+            return str;
+        }
+
+        reStr(str,0,n-1);
+        reStr(str,n,str.size()-1);
+        reStr(str,0,str.size()-1);
+        return str;
+    }
+
+    void reStr(string &str,int i,int j)
+    {
+        swap(str[i++],str[j--]);
+    }
+};
+
+
+class Solution27
+{
+    void FindNumsAppearOnce(vector<int> data,int *num1,int *num2)
+    {
+        int diff=accumulate(data.begin(),data.end(),0,bit_xor<int>());
+        diff&=-diff;
+        for(int i:data)
+        {
+            if(i&diff)
+            {
+                *num1^=i;
+            }
+            else
+            {
+                *num2^=i;
+            }
+            
+        }
+
+        return;
+    }
+};
+
+
+//连续和为S的数组
+class Solution28
+{
+    vector<vector<int>> FindCountiunousSequence(int num)
+    {
+        vector<vector<int>> res;
+
+        int left=1,right=2;
+        while(left<right)
+        {
+            int sum=(left+right)*(right-left+1)/2;
+            if(num==sum)
+            {
+                vector<int> re;
+                for(int i=left;i<=right;i++)
+                {
+                    re.emplace_back(i);
+                }
+                res.emplace_back(re);
+                left++;
+            }
+            else
+            {
+                num>sum?right++:left++;
+            }
+            
+        }
+
+        return res;
+    }
+};
+
+
+class Solution29
+{
+    int TreeDepth(TreeNode *root)
+    {
+        return root?max(TreeDepth(root->left),TreeDepth(root->right))+1:0;
+    }
+};
+
+
+class Solution30
+{
+    bool IsBance(TreeNode *root)
+    {
+        return getDepth(root)!=-1;
+    }
+
+    int getDepth(TreeNode *root)
+    {
+        if(!root)
+        {
+            return 0;
+        }
+
+        int left=0,right=0;
+        if( (left=getDepth(root->left))==-1 )
+        {
+            return -1;
+        }
+
+        if( (right=getDepth(root->right))==-1 )
+        {
+            return -1;
+        }
+
+        return abs(left-right)>1?-1:max(left,right)+1;
+    }
+};
+
+
