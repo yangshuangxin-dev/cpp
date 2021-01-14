@@ -945,3 +945,279 @@ class Solution30
 };
 
 
+class Solution31
+{
+    ListNode *FindFirstCommonNode(ListNode *pHead1,ListNode *pHead2)
+    {
+        if(!pHead1||!pHead2)
+        {
+            return nullptr;
+        }
+
+        auto p1=pHead1,p2=pHead2;
+        while(p1!=p2)
+        {
+            p1=p1?p1->next:pHead2;
+            p2=p2?p2->next:pHead1;
+        }
+
+        return p1;
+    }
+};
+
+class Solution32
+{
+    int GetNumberOfK(vector<int> data,int k)
+    {
+        if(data.empty())
+        {
+            return 0;
+        }
+
+        return getIndex(data,k+0.5)-getIndex(data,k-0.5);
+    }
+
+    int getIndex(vector<int> data,double k)
+    {
+        int i=0,j=data.size()-1;
+        while(i<=j)
+        {
+            int mid=i+(j-i)/2;
+            if(data[mid]<k)
+            {
+                i=mid;
+            }
+            else
+            {
+                j=mid;
+            }
+            
+        }
+
+        return i;
+    }
+};
+
+
+class Solution33
+{
+    int FirstNotRepeatingChar(string str)
+    {
+        int hash[256]={0};
+        for(char ch:str)
+        {
+            hash[ch]++;
+        }
+
+        for(int i=0;i<str.size();i++)
+        {
+            if(hash[str[i]]==1)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+};
+
+class Solution34
+{
+    int ans=0;
+    int InvdersdeParse(vector<int> data)
+    {
+        ans=0;
+        if(data.empty())
+        {
+            return 0;
+        }
+
+        vector<int> tmp=data;
+        solve(data,tmp,0,data.size()-1);
+        return ans;
+    }
+
+    void solve(vector<int> data,vector<int> tmp,int x,int y)
+    {
+        if(x<y-1)
+        {
+            int mid=x+(y-x)/2;
+            solve(data,tmp,x,mid);
+            solve(data,tmp,mid,y);
+
+            int left=x,right=mid,i=x,t=mid-x;
+            while(left<mid||right<y)
+            {
+                if(right>=y||(left<mid&&data[left]<data[right]))
+                {
+                    ans--;
+                    tmp[i++]=data[left++];
+                }
+                else
+                {
+                    ans+=t;
+                    tmp[i++]=data[right++];
+                }
+                
+            }
+        }
+
+        for(int i=x;i<y;i++)
+        {
+            data[i]=tmp[i];
+        }
+    }
+};
+
+class Solution35
+{
+    string PrintMinNumber(vector<int> numbers)
+    {
+        if(numbers.empty())
+        {
+            return "";
+        }
+
+        sort(numbers.begin(),numbers.end(),[](int a,int b){
+            return to_string(a)+to_string(b)<to_string(b)+to_string(a);
+        });
+
+        string s;
+        for(int i:numbers)
+        {
+            s+=to_string(i);
+        }
+
+        return s;
+    }
+};
+
+
+class Solution36
+{
+    int GetUglyNumber(int index)
+    {
+        if(index<=0)
+        {
+            return 0;
+        }
+
+        vector<int> ugly(index);
+        ugly[0]=1;
+        int t2=0,t3=0,t5=0;
+        for(int i=1;i<index;i++)
+        {
+            ugly[i]=min(ugly[t2]*2,min(ugly[t3]*3,ugly[t5]*5));
+            if(ugly[i]==ugly[t2]*2)
+            {
+                t2++;
+            }
+
+            if(ugly[i]==ugly[t3]*3)
+            {
+                t3++;
+            }
+
+            if(ugly[i]==ugly[t5]*5)
+            {
+                t5++;
+            }
+        }
+
+        return ugly[index-1];
+    }
+};
+
+
+class Solution37
+{
+    int FindGreatSumOfArray(vector<int> array)
+    {
+        if(array.empty())
+        {
+            return 0;
+        }
+
+        int sum=array[0],tmp=sum;
+        for(int i=1;i<array.size();i++)
+        {
+            tmp=tmp<0?array[i]:tmp+array[i];
+            sum=sum<tmp?tmp:sum;
+        }
+
+        return sum;
+    }
+};
+
+
+class Solution38
+{
+    int numbersOf1Between1AndN(int n)
+    {
+        int one=0;
+        for(int i=1;i<=n;i*=10)
+        {
+            int a=n/i;
+            int b=n%i;
+            one+=(a+8)/10*i+(a%10==1)*(b+1);
+        }
+        return one;
+    }
+};
+
+class Solution39
+{
+    int MoreThanHalfNum(vector<int> numbers)
+    {
+        if(numbers.empty())
+        {
+            return 0;
+        }
+
+        map<int,int> hash;
+        for(int i:numbers)
+        {
+            if(++hash[i]>numbers.size()/2)
+            {
+                return i;
+            }
+        }
+
+        return '#';
+    }
+};
+
+class Solution40
+{
+    vector<int> GetLeastNumbers(vector<int> inputs,int k)
+    {
+        vector<int> result;
+        if(inputs.empty())
+        {
+            return result;
+        }
+
+        multiset<int ,greater<int>> mset;
+        for(auto i:inputs)
+        {
+            if(mset.size()<k)
+            {
+                mset.insert(i);
+            }
+            else
+            {
+                auto tmp=mset.begin();
+                if(*tmp>i)
+                {
+                    mset.erase(tmp);
+                    mset.insert(i); 
+                }
+            }
+            
+        }
+
+        result=vector<int>(mset.begin(),mset.end());
+        return result;
+    }
+};
+

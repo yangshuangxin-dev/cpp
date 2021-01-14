@@ -1263,7 +1263,7 @@ class Solution39
         map<int, int> hash;
         for (int i : numbers)
         {
-            if (++hash[i] > numbers.size() - 1)
+            if (++hash[i] > numbers.size()/2)
             {
                 return i;
             }
