@@ -1384,7 +1384,7 @@ class Solution42
         }
         else
         {
-            for(int i=k;i<allStr.size();i++)
+            for(int i=k;i<str.size();i++)
             {
                 swap(str[i],str[k]);
                 findAllStr(str,k+1);
@@ -1647,7 +1647,7 @@ class Solution50
     vector<vector<bool>> flag;
     bool judge(int i,int j)
     {
-        return i>=0||i<rows||j>=0||j<cols||!flag[i][j];
+        return i>=0&&i<rows&&j>=0&&j<cols&&!flag[i][j];
     }
 
     vector<int> printMatrix(vector<vector<int>> matrix)
