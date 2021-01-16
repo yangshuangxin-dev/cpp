@@ -1510,7 +1510,7 @@ class Solution50
 
     bool judge(int i, int j)
     {
-        return i >= 0 && i < rows && j >= 0 && j < cosl && !flag[i][j];
+        return i >= 0 && i < rows && j >= 0 && j < cols && !flag[i][j];
     }
 
     vector<int> printMatrix(vector<vector<int>> matrix)
@@ -1545,5 +1545,225 @@ class Solution50
         }
 
         return result;
+    }
+};
+
+class Solution51
+{
+    ListNode *Merge(ListNode *pHead1, ListNode *pHead2)
+    {
+        if (!pHead1)
+        {
+            return pHead2;
+        }
+
+        if (!pHead2)
+        {
+            return pHead1;
+        }
+
+        if (pHead1->val < pHead2->val)
+        {
+            pHead1->next = Merge(pHead1->next, pHead2);
+            return pHead1;
+        }
+        else
+        {
+            pHead2->next = Merge(pHead1, pHead2->next);
+            return pHead2;
+        }
+
+        return nullptr;
+    }
+};
+
+class Solution52
+{
+    bool HasSubTree(TreeNode *pRoot1, TreeNode *pRoot2)
+    {
+        if (!pRoot1 || !pRoot2)
+        {
+            return false;
+        }
+
+        return isSub(pRoot1, pRoot2) ||
+               isSub(pRoot1->left, pRoot2) ||
+               isSub(pRoot1->right, pRoot2);
+    }
+
+    bool isSub(TreeNode *pRoot1, TreeNode *pRoot2)
+    {
+        if (!pRoot1)
+        {
+            return false;
+        }
+
+        if (!pRoot2)
+        {
+            return true;
+        }
+
+        if (pRoot1->val == pRoot2->val)
+        {
+            return isSub(pRoot1->left, pRoot2->left) && isSub(pRoot1->right, pRoot2->right);
+        }
+
+        return false;
+    }
+};
+
+class Solution53
+{
+    ListNode *FindKthToTail(ListNode *pNode, int k)
+    {
+        if (!pNode || k <= 0)
+        {
+            return nullptr;
+        }
+
+        auto p1 = pNode;
+        for (int i = 1; i < k && p1; i++)
+        {
+            p1 = p1->next;
+        }
+
+        if (!p1)
+        {
+            return nullptr;
+        }
+
+        auto p2 = pNode;
+        while (p1->next)
+        {
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+
+        return p2;
+    }
+};
+
+class Solution54
+{
+    ListNode *ReverseList(ListNode *pNode)
+    {
+        if (!pNode || !pNode->next)
+        {
+            return pNode;
+        }
+
+        auto h = ReverseList(pNode->next);
+        pNode->next->next = pNode;
+        pNode->next = nullptr;
+        return h;
+    }
+};
+
+class Solution55
+{
+    double Power(double base, int exponent)
+    {
+        int p = abs(exponent);
+        double r = 1.0;
+        while (p)
+        {
+            (p & 1) && (r *= base);
+            p >>= 1;
+            base *= base;
+        }
+
+        return exponent < 0 ? 1 / r : r;
+    }
+};
+
+class Solution56
+{
+    void reOrserArray(vector<int> &array)
+    {
+        for (int i = 0; i < array.size(); i++)
+        {
+            for (int j = array.size() - 1; j > i; j--)
+            {
+                if (array[j] % 2 == 1 && array[j - 1] % 2 == 0)
+                {
+                    swap(array[j], array[j - 1]);
+                }
+            }
+        }
+    }
+};
+
+class Solution57
+{
+    int rectCover(int number)
+    {
+        if (number <= 0)
+        {
+            return 0;
+        }
+
+        if (number <= 2)
+        {
+            return number;
+        }
+
+        int a = 1, b = 2;
+        for (int i = 2; i < number; i++)
+        {
+            int tmp = a + b;
+            a = b;
+            b = tmp;
+        }
+
+        return b;
+    }
+};
+
+class Solution58
+{
+    int NumberOf1(int number)
+    {
+        int count = 0;
+        while (number)
+        {
+            count++;
+            number &= (number - 1);
+        }
+
+        return count;
+    }
+};
+
+class Solution59
+{
+    int jumpFloor(int number)
+    {
+        if (number <= 0)
+        {
+            return 0;
+        }
+
+        if (number <= 2)
+        {
+            return number;
+        }
+
+        int a = 1, b = 2;
+        for (int i = 2; i < number; i++)
+        {
+            int tmp = a + b;
+            a = b;
+            b = tmp;
+        }
+
+        return b;
+    }
+};
+
+class Solution60
+{
+    int jumpFloor(int number)
+    {
+        return 1 << (number - 1);
     }
 };

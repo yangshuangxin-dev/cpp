@@ -1263,7 +1263,7 @@ class Solution39
         map<int, int> hash;
         for (int i : numbers)
         {
-            if (++hash[i] > numbers.size()/2)
+            if (++hash[i] > numbers.size() / 2)
             {
                 return i;
             }
@@ -1307,47 +1307,44 @@ class Solution40
     }
 };
 
-
-
 class Solution41
 {
     TreeNode *ConVert(TreeNode *pRoot)
     {
-        if(!pRoot)
+        if (!pRoot)
         {
             return nullptr;
         }
 
-        TreeNode *cur=pRoot,*pre=nullptr,*res=nullptr;
+        TreeNode *cur = pRoot, *pre = nullptr, *res = nullptr;
 
-        while(cur)
+        while (cur)
         {
-            while(cur->left)
+            while (cur->left)
             {
-                auto tmp=cur->left;
-                while(tmp->right)
+                auto tmp = cur->left;
+                while (tmp->right)
                 {
-                    tmp=tmp->right;
+                    tmp = tmp->right;
                 }
 
-                tmp->right=cur;
-                tmp=cur->left; 
-                cur->left=nullptr;
-                cur=tmp;  
+                tmp->right = cur;
+                tmp = cur->left;
+                cur->left = nullptr;
+                cur = tmp;
             }
 
-            cur->left=pre;
-            if(pre==nullptr)
+            cur->left = pre;
+            if (pre == nullptr)
             {
-                res=cur;
+                res = cur;
             }
             else
             {
-                pre->right=cur;
+                pre->right = cur;
             }
-            pre=cur;
-            cur=cur->right;
-            
+            pre = cur;
+            cur = cur->right;
         }
 
         return res;
@@ -1363,119 +1360,114 @@ class Solution42
     {
         allStr.clear();
 
-        if(str.empty())
+        if (str.empty())
         {
             return allStr;
         }
 
-        findAllStr(str,0);
-        sort(allStr.begin(),allStr.end());
+        findAllStr(str, 0);
+        sort(allStr.begin(), allStr.end());
         return allStr;
     }
 
-    void findAllStr(string &str,int k)
+    void findAllStr(string &str, int k)
     {
-        if(k==str.size()-1)
+        if (k == str.size() - 1)
         {
-            if(find(allStr.begin(),allStr.end(),str)==allStr.end())
+            if (find(allStr.begin(), allStr.end(), str) == allStr.end())
             {
                 allStr.emplace_back(str);
             }
         }
         else
         {
-            for(int i=k;i<str.size();i++)
+            for (int i = k; i < str.size(); i++)
             {
-                swap(str[i],str[k]);
-                findAllStr(str,k+1);
-                swap(str[i],str[k]);
+                swap(str[i], str[k]);
+                findAllStr(str, k + 1);
+                swap(str[i], str[k]);
             }
         }
 
         return;
-        
     }
 };
-
 
 //查找二叉树的路径
 class Solution43
 {
     vector<int> path;
-    vector<vector<int>>  allPath;
+    vector<vector<int>> allPath;
 
-    vector<vector<int>> FindPath(TreeNode *root,int expectNumber)
+    vector<vector<int>> FindPath(TreeNode *root, int expectNumber)
     {
         allPath.clear();
-        if(!root) 
+        if (!root)
         {
             return allPath;
         }
 
-        findAllPath(root,expectNumber);
+        findAllPath(root, expectNumber);
         return allPath;
     }
 
-    void findAllPath(TreeNode *root,int expectNumber)
+    void findAllPath(TreeNode *root, int expectNumber)
     {
-        if(!root)
+        if (!root)
         {
-            return ;   //
+            return; //
         }
 
         path.emplace_back(root->val);
-        if(!root->left&&!root->right&&root->val==expectNumber)
+        if (!root->left && !root->right && root->val == expectNumber)
         {
             allPath.emplace_back(path);
         }
         else
         {
-            findAllPath(root->left,expectNumber-root->val);
-            findAllPath(root->right,expectNumber - root->val);
+            findAllPath(root->left, expectNumber - root->val);
+            findAllPath(root->right, expectNumber - root->val);
         }
         path.pop_back();
-        
     }
 };
-
 
 struct RandomListNode
 {
     int label;
-    struct RandomListNode *next,*random;
+    struct RandomListNode *next, *random;
 
-    RandomListNode(int x):label(x),next(nullptr),random(nullptr){}
+    RandomListNode(int x) : label(x), next(nullptr), random(nullptr) {}
 };
 
 class Solution44
 {
     RandomListNode *Clone(RandomListNode *node)
     {
-        if(!node)
+        if (!node)
         {
             return nullptr;
         }
 
-        map<RandomListNode*,RandomListNode*> hash;
-        auto p=node;
-        while(p)
+        map<RandomListNode *, RandomListNode *> hash;
+        auto p = node;
+        while (p)
         {
-            hash[p]=new RandomListNode(p->label);
-            p=p->next;
+            hash[p] = new RandomListNode(p->label);
+            p = p->next;
         }
 
-        p=node;
-        while(p)
+        p = node;
+        while (p)
         {
-            hash[p]->next=hash[p->next];
-            hash[p->random]=hash[p->random];
-            p=p->next;
+            hash[p]->next = hash[p->next];
+            hash[p->random] = hash[p->random];
+            p = p->next;
         }
 
-        return hash[node];   
+        return hash[node];
     }
 };
-
 
 //按层打印二叉树
 class Solution45
@@ -1483,88 +1475,82 @@ class Solution45
     vector<int> PrintFromTottom(TreeNode *root)
     {
         vector<int> res;
-        if(!root)
+        if (!root)
         {
-            return res;  
+            return res;
         }
 
         queue<TreeNode *> q;
-        q.push(root);  
+        q.push(root);
 
-        while(q.size()) 
+        while (q.size())
         {
-            auto cur=q.front();
+            auto cur = q.front();
             q.pop();
             res.emplace_back(cur->val);
-            if(cur->left)
+            if (cur->left)
             {
                 q.push(cur->left);
             }
-            if(cur->right)
+            if (cur->right)
             {
                 q.push(cur->right);
             }
         }
 
-
-        return res;  
+        return res;
     }
 };
-
 
 //判断是否是后序遍历的二叉排序树
 class Solution46
 {
     bool VerifySequenceOfBST(vector<int> sequence)
     {
-        if(sequence.empty())
+        if (sequence.empty())
         {
             return false;
         }
 
-        return judge(sequence,0,sequence.size()-1);  
+        return judge(sequence, 0, sequence.size() - 1);
     }
 
-    bool judge(vector<int> se,int start,int end)
+    bool judge(vector<int> se, int start, int end)
     {
-        if(end>start)
+        if (end > start)
         {
             return true;
         }
 
-        int i=end-1;
-        while(i>start&&se[i]>se[end])
+        int i = end - 1;
+        while (i > start && se[i] > se[end])
         {
             i--;
         }
 
-        int j=i;
+        int j = i;
 
-        while(j>=start)
+        while (j >= start)
         {
-            if(se[j--]>se[end])
+            if (se[j--] > se[end])
             {
-                return false;  
+                return false;
             }
-
         }
 
-        return judge(se,start,i)&&judge(se,i+1,end-1);  
-
+        return judge(se, start, i) && judge(se, i + 1, end - 1);
     }
 };
-
-
 
 //最小元素的栈
 class Solution47
 {
-    stack<int> st1,st2;
+    stack<int> st1, st2;
 
     void push(int x)
     {
         st1.push(x);
-        if(st2.empty()||st2.top()>x)
+        if (st2.empty() || st2.top() > x)
         {
             st2.push(x);
         }
@@ -1572,8 +1558,6 @@ class Solution47
         {
             st2.push(st2.top());
         }
-        
-
     }
 
     void pop()
@@ -1582,10 +1566,9 @@ class Solution47
         st2.pop();
     }
 
-
     int top()
     {
-        return st1.top();  
+        return st1.top();
     }
 
     int min()
@@ -1594,24 +1577,23 @@ class Solution47
     }
 };
 
-
 //判断是否栈弹出队列
 class Solution48
 {
-    bool IsPopOrder(vector<int> pushV,vector<int> popV)
+    bool IsPopOrder(vector<int> pushV, vector<int> popV)
     {
-        if(pushV.empty()||popV.empty())
+        if (pushV.empty() || popV.empty())
         {
-            return false;  
+            return false;
         }
 
         vector<int> st;
 
-        int i=0,j=0;
-        while(i<pushV.size())
+        int i = 0, j = 0;
+        while (i < pushV.size())
         {
             st.emplace_back(pushV[i++]);
-            if(j<popV.size()&&st.back()==popV[j])
+            if (j < popV.size() && st.back() == popV[j])
             {
                 j++;
                 st.pop_back();
@@ -1622,165 +1604,157 @@ class Solution48
     }
 };
 
-
 //镜像二叉树
 class Solution49
 {
     void Mirror(TreeNode *root)
     {
-        if(!root)
+        if (!root)
         {
-            return ;
+            return;
         }
 
-        swap(root->left,root->right);
+        swap(root->left, root->right);
         Mirror(root->left);
         Mirror(root->right);
     }
 };
 
-
 //矩阵顺时针打印
 class Solution50
 {
-    int rows,cols;
+    int rows, cols;
     vector<vector<bool>> flag;
-    bool judge(int i,int j)
+    bool judge(int i, int j)
     {
-        return i>=0&&i<rows&&j>=0&&j<cols&&!flag[i][j];
+        return i >= 0 && i < rows && j >= 0 && j < cols && !flag[i][j];
     }
 
     vector<int> printMatrix(vector<vector<int>> matrix)
     {
         vector<int> result;
-        if(matrix.empty())
+        if (matrix.empty())
         {
             return result;
         }
 
-        rows=matrix.size();
-        cols=matrix[0].size();
+        rows = matrix.size();
+        cols = matrix[0].size();
 
-        flag=vector<vector<bool>>(rows,vector<bool>(cols,false));
-        char D[4][2]={
-            {0,1},
-            {1,0},
-            {0,-1},
-            {-1,0} 
-        };
+        flag = vector<vector<bool>>(rows, vector<bool>(cols, false));
+        char D[4][2] = {
+            {0, 1},
+            {1, 0},
+            {0, -1},
+            {-1, 0}};
 
-        int i=0,j=0,d=0,T=cols*rows;
-        while(T--)
+        int i = 0, j = 0, d = 0, T = cols * rows;
+        while (T--)
         {
             result.emplace_back(matrix[i][j]);
-            if( !judge(i+D[d][0],j+D[d][1]) )
+            if (!judge(i + D[d][0], j + D[d][1]))
             {
-                d=(d+1)%4;
+                d = (d + 1) % 4;
             }
 
-            i+=D[d][0];
-            j+=D[d][1];
+            i += D[d][0];
+            j += D[d][1];
         }
 
-        return  result;
+        return result;
     }
 };
 
-
 class Solution51
 {
-    ListNode *Merge(ListNode *pHead1,ListNode *pHead2)
+    ListNode *Merge(ListNode *pHead1, ListNode *pHead2)
     {
-        if(!pHead1)
+        if (!pHead1)
         {
             return pHead2;
         }
 
-        if(!pHead2)
+        if (!pHead2)
         {
             return pHead1;
         }
 
-        if(pHead1->val<pHead2->val)
+        if (pHead1->val < pHead2->val)
         {
-            pHead1->next=Merge(pHead1->next,pHead2);
+            pHead1->next = Merge(pHead1->next, pHead2);
             return pHead1;
         }
         else
         {
-            pHead2->next=Merge(pHead1,pHead2->next);
+            pHead2->next = Merge(pHead1, pHead2->next);
             return pHead2;
         }
 
         return nullptr;
-        
     }
 };
 
 class Solution52
 {
-    bool HasSubTree(TreeNode *pRoot1,TreeNode *pRoot2)
+    bool HasSubTree(TreeNode *pRoot1, TreeNode *pRoot2)
     {
-        if(!pRoot1||!pRoot2)
+        if (!pRoot1 || !pRoot2)
         {
             return false;
         }
 
-        return isSub(pRoot1,pRoot2)||
-               isSub(pRoot1->left,pRoot2)||
-               isSub(pRoot1->right,pRoot2);
+        return isSub(pRoot1, pRoot2) ||
+               isSub(pRoot1->left, pRoot2) ||
+               isSub(pRoot1->right, pRoot2);
     }
 
-    bool isSub(TreeNode *pHead1,TreeNode *pHead2)
+    bool isSub(TreeNode *pHead1, TreeNode *pHead2)
     {
-        if(!pHead1&&pHead2)
+        if (!pHead1 && pHead2)
         {
             return false;
         }
 
-        if(!pHead2)
+        if (!pHead2)
         {
             return true;
         }
 
-        if(pHead1->val==pHead2->val)
+        if (pHead1->val == pHead2->val)
         {
-            return isSub(pHead1->left,pHead2->left)&&isSub(pHead1->right,pHead2->right);
+            return isSub(pHead1->left, pHead2->left) && isSub(pHead1->right, pHead2->right);
         }
 
         return false;
     }
 };
 
-
-
 //链表的倒数第k个节点
-
 
 class Solution53
 {
-    ListNode *FindkthToTail(ListNode *pNode,int k)
+    ListNode *FindkthToTail(ListNode *pNode, int k)
     {
-        if(!pNode||k<=0)
+        if (!pNode || k <= 0)
         {
             return nullptr;
         }
-        auto p1=pNode;
-        for(int i=1;i<k&&p1;i++)
+        auto p1 = pNode;
+        for (int i = 1; i < k && p1; i++)
         {
-            p1=p1->next; 
+            p1 = p1->next;
         }
 
-        if(!p1)
+        if (!p1)
         {
             return nullptr;
         }
 
-        auto p2=pNode;
-        while(p1->next)
+        auto p2 = pNode;
+        while (p1->next)
         {
-            p1=p1->next;
-            p2=p2->next;
+            p1 = p1->next;
+            p2 = p2->next;
         }
         return p2;
     }
@@ -1789,37 +1763,35 @@ class Solution53
 //翻转链表
 class Solution54
 {
-    ListNode* ReverseList(ListNode *pNode)
+    ListNode *ReverseList(ListNode *pNode)
     {
-       if(!pNode||!pNode->next)
-       {
-           return pNode;
-       }
+        if (!pNode || !pNode->next)
+        {
+            return pNode;
+        }
 
-       auto h=ReverseList(pNode->next);
-       pNode->next->next=pNode;
-       pNode->next=nullptr;
-       return h;
+        auto h = ReverseList(pNode->next);
+        pNode->next->next = pNode;
+        pNode->next = nullptr;
+        return h;
     }
-
 };
-
 
 //求base的e次方
 class Solution55
 {
-    double Power(double base,int exponent)
+    double Power(double base, int exponent)
     {
-        int p=abs(exponent);
-        double r=1.0;
-        while(p)
+        int p = abs(exponent);
+        double r = 1.0;
+        while (p)
         {
-            (p&1)&&(r*=base);
-            p>>=1;
-            base*=base;
+            (p & 1) && (r *= base);
+            p >>= 1;
+            base *= base;
         }
 
-        return exponent<0?1/r:r;
+        return exponent < 0 ? 1 / r : r;
     }
 };
 
@@ -1828,13 +1800,13 @@ class Solution56
 {
     void reOrserArray(vector<int> &array)
     {
-        for(int i=0;i<array.size();i++)
+        for (int i = 0; i < array.size(); i++)
         {
-            for(int j=array.size()-1;j>i;j--)
+            for (int j = array.size() - 1; j > i; j--)
             {
-                if(array[j]%2==1&&array[j-1]%2==0)
+                if (array[j] % 2 == 1 && array[j - 1] % 2 == 0)
                 {
-                    swap(array[j],array[j-1]);
+                    swap(array[j], array[j - 1]);
                 }
             }
         }
@@ -1848,22 +1820,22 @@ class Solution57
 {
     int rectCover(int number)
     {
-        if(number<=0)
+        if (number <= 0)
         {
             return 0;
         }
 
-        if(number<=2)
+        if (number <= 2)
         {
             return number;
         }
 
-        int a=1,b=2;
-        for(int i=2;i<number;i++)
+        int a = 1, b = 2;
+        for (int i = 2; i < number; i++)
         {
-            int tmp=a+b;
-            a=b;
-            b=tmp;
+            int tmp = a + b;
+            a = b;
+            b = tmp;
         }
 
         return b;
@@ -1875,11 +1847,11 @@ class Solution58
 {
     int NumberOf1(int n)
     {
-        int count=0;
-        while(n)
+        int count = 0;
+        while (n)
         {
             count++;
-            n&=(n-1);
+            n &= (n - 1);
         }
 
         return count;
@@ -1891,23 +1863,23 @@ class Solution59
 {
     int jumpFloor(int number)
     {
-        if(number<0)
+        if (number < 0)
         {
             return 0;
         }
 
-        if(number<=2)
+        if (number <= 2)
         {
             return number;
         }
 
-        int a=1,b=2;
+        int a = 1, b = 2;
 
-        for(int i=2;i<number;i++)
+        for (int i = 2; i < number; i++)
         {
-            int tmp=a+b;
-            a=b;
-            b=tmp;
+            int tmp = a + b;
+            a = b;
+            b = tmp;
         }
 
         return b;
@@ -1919,7 +1891,7 @@ class Solution60
 {
     int jumpFloor(int number)
     {
-        return 1<<(number+1);
+        return 1 << (number + 1);
     }
 };
 
@@ -1928,33 +1900,32 @@ class Solution61
 {
     int minNumberInRoteArray(vector<int> array)
     {
-        if(array.empty())
+        if (array.empty())
         {
             return 0;
         }
 
-        int left=0,right=array.size()-1;
-        while(left<right)
+        int left = 0, right = array.size() - 1;
+        while (left < right)
         {
-            if(array[left]<array[right])
+            if (array[left] < array[right])
             {
                 return array[left];
             }
 
-            int mid=left+(right-left)/2;
-            if(array[mid]>array[left])
+            int mid = left + (right - left) / 2;
+            if (array[mid] > array[left])
             {
-                left=mid+1;
+                left = mid + 1;
             }
-            else if(array[mid]<array[right])
+            else if (array[mid] < array[right])
             {
-                right=mid;
+                right = mid;
             }
             else
             {
                 left++;
             }
-            
         }
 
         return array[left];
@@ -1966,53 +1937,51 @@ class Solution62
 {
     int Fibonacci(int n)
     {
-        if(n<0)
+        if (n < 0)
         {
             return 0;
         }
 
-        int a=1,b=1;
-        for(int i=2;i<n;i++)
+        int a = 1, b = 1;
+        for (int i = 2; i < n; i++)
         {
-            int tmp=a+b;
-            a=b;
-            b=tmp;
+            int tmp = a + b;
+            a = b;
+            b = tmp;
         }
 
         return b;
     }
 };
 
-
 //重建二叉树
 class Solution53
 {
-    TreeNode *ReConstBinaryTree(vector<int> pre,vector<int> vin)
+    TreeNode *ReConstBinaryTree(vector<int> pre, vector<int> vin)
     {
-        if(pre.empty()||vin.empty())
+        if (pre.empty() || vin.empty())
         {
             return nullptr;
         }
 
-        auto root=reTree(pre,0,pre.size()-1,vin,0,vin.size()-1);
+        auto root = reTree(pre, 0, pre.size() - 1, vin, 0, vin.size() - 1);
         return root;
-
     }
 
-    TreeNode *reTree(vector<int> pre,int preStart,int preEnd,vector<int> vin,int vinStart,int vinEnd)
+    TreeNode *reTree(vector<int> pre, int preStart, int preEnd, vector<int> vin, int vinStart, int vinEnd)
     {
-        if(preStart>preEnd||vinStart>vinEnd)
+        if (preStart > preEnd || vinStart > vinEnd)
         {
             return nullptr;
         }
 
-        auto root=new TreeNode(pre[preStart]);
-        for(int i=vinStart;i<=vinEnd;i++)
+        auto root = new TreeNode(pre[preStart]);
+        for (int i = vinStart; i <= vinEnd; i++)
         {
-            if(root->val==vin[i])
+            if (root->val == vin[i])
             {
-                root->left=reTree(pre,preStart+1,preStart+i-vinStart,vin,vinStart,i-1);
-                root->right=reTree(pre,preStart+i-vinStart+1,preEnd,vin,i+1,vinEnd);
+                root->left = reTree(pre, preStart + 1, preStart + i - vinStart, vin, vinStart, i - 1);
+                root->right = reTree(pre, preStart + i - vinStart + 1, preEnd, vin, i + 1, vinEnd);
             }
 
             return root;
@@ -2024,7 +1993,7 @@ class Solution53
 
 class Solution64
 {
-    stack<int> st1,st2;
+    stack<int> st1, st2;
     void push(int x)
     {
         st1.push(x);
@@ -2032,56 +2001,53 @@ class Solution64
 
     int pop()
     {
-        if(st2.empty())
+        if (st2.empty())
         {
-            while(st1.size())
+            while (st1.size())
             {
                 st2.push(st1.top());
                 st1.pop();
             }
         }
 
-        int tmp=st2.top();
+        int tmp = st2.top();
         st2.pop();
         return tmp;
     }
 };
 
-
 //空格替换
 class Solution65
 {
-    void replaceSpace(char *str,int length)
+    void replaceSpace(char *str, int length)
     {
-        int count=0;
-        for(int i=0;i<length;i++)
+        int count = 0;
+        for (int i = 0; i < length; i++)
         {
-            if(str[i]==' ')
+            if (str[i] == ' ')
             {
                 count++;
             }
         }
 
-        for(int i=length-1;i>=0;i--)
+        for (int i = length - 1; i >= 0; i--)
         {
-            if(str[i]!=' ')
+            if (str[i] != ' ')
             {
-                str[i+2*count]=str[i];
+                str[i + 2 * count] = str[i];
             }
             else
             {
                 count--;
-                str[i+2*count]='%';
-                str[i+2*count+1]='2';
-                str[i+2*count+2]='0';
+                str[i + 2 * count] = '%';
+                str[i + 2 * count + 1] = '2';
+                str[i + 2 * count + 2] = '0';
             }
-            
         }
 
-        return ;
+        return;
     }
 };
-
 
 //返回链表的倒序
 class Solution66
@@ -2089,10 +2055,10 @@ class Solution66
     vector<int> printListFromTailToHead(ListNode *head)
     {
         vector<int> res;
-        while(head)
+        while (head)
         {
             res.emplace_back(head->val);
-            head=head->next;
+            head = head->next;
         }
 
         res.reserve(res.size());
@@ -2103,24 +2069,23 @@ class Solution66
 //矩阵查找元素
 class Solution67
 {
-    bool FindInMatrix(int target,vector<vector<int>> matrix)
+    bool FindInMatrix(int target, vector<vector<int>> matrix)
     {
-        if(matrix.empty())
+        if (matrix.empty())
         {
             return false;
         }
 
-        for(int i=matrix.size()-1,j=0;i>=0&&j<matrix[0].size();)
+        for (int i = matrix.size() - 1, j = 0; i >= 0 && j < matrix[0].size();)
         {
-            if(target==matrix[i][j])
+            if (target == matrix[i][j])
             {
-                return true;  
+                return true;
             }
             else
             {
-                target<matrix[i][j]?i--:j++;
+                target < matrix[i][j] ? i-- : j++;
             }
-            
         }
 
         return false;
