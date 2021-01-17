@@ -1767,3 +1767,205 @@ class Solution60
         return 1 << (number - 1);
     }
 };
+
+class Solution61
+{
+    int minNumberInRoteArray(vector<int> array)
+    {
+        if(array.empty())
+        {
+            return 0;
+        }
+
+        int left=0,right=array.size()-1;
+        while(left<right)
+        {
+            if(array[left]<array[right])
+            {
+                return array[left];
+            }
+
+            int mid=left+(right-left)/2;
+            if(array[left]<array[mid])
+            {
+                left=mid+1;
+            }
+            else if(array[mid]<array[right])
+            {
+                right=mid;
+            }
+            else
+            {
+                left++;
+            }
+            
+        }
+
+        return array[left];
+    }
+};
+
+
+class Solution62
+{
+    int Fibonacci(int n)
+    {
+        if(n<0)
+        {
+            return 0;
+        }
+
+        int a=1,b=1;
+        for(int i=2;i<n;i++)
+        {
+            int tmp=a+b;
+            a=b;
+            b=tmp;
+        }
+
+        return b;
+    }
+};
+
+class Solution53
+{
+    TreeNode *ReConstBinaryTree(vector<int> pre,vector<int> vin)
+    {
+        if(pre.empty()||vin.empty())
+        {
+            return nullptr;
+        }
+
+        auto root=reTree(pre,0,pre.size()-1,vin,0,vin.size()-1);
+        return root;
+    }
+
+    TreeNode *reTree(vector<int> &pre,int preStart,int preEnd,vector<int> &vin,int vinStart,int vinEnd)
+    {
+        if(preStart>preEnd||vinStart>vinEnd)
+        {
+            return nullptr;
+        }
+
+        auto root=new TreeNode(pre[preStart]);
+        for(int i=vinStart;i<=vinEnd;i++)
+        {
+            if(root->val==vin[i])
+            {
+                root->left=reTree(pre,preStart+1,preStart+i-vinStart,vin,vinStart,i-1);
+                root->right=reTree(pre,preStart+i-vinStart+1,preEnd,vin,i+1,vinEnd);
+                break;
+            }
+
+
+        }
+
+        return root;
+    }
+};
+
+
+
+
+
+class Solution64
+{
+    stack<int> st1,st2;
+    void push(int x)
+    {
+        st1.push(x);
+    }
+
+    int pop()
+    {
+        if(st2.empty())
+        {
+            while(st1.size())
+            {
+                st2.push(st1.top());
+                st1.pop();
+            }
+        }
+
+        int tmp=st2.top();
+        st2.pop();
+        return tmp;
+    }
+};
+
+
+class Solution65
+{
+    void replaceSpace(char *str,int length)
+    {
+        int count=0;
+        for(int i=0;i<length;i++)
+        {
+            if(str[i]==' ')
+            {
+                count++;
+            }
+        }
+
+        for(int i=length-1;i>=0;i--)
+        {
+            if(str[i]!=' ')
+            {
+                str[i+2*count]=str[i];
+            }
+            else
+            {
+                count--;
+                str[i+2*count]='%';
+                str[i+2*count+1]='2';
+                str[i+2*count+2]='0';
+            }
+            
+        }
+
+        return;
+    }
+};
+
+
+class Solution66
+{
+    vector<int> printlistFromTailTohead(ListNode *head)
+    {
+        vector<int> res;
+        while(head)
+        {
+            res.emplace_back(head->val);
+            head=head->next;
+        }
+
+        res.reserve(res.size());
+        return res;
+    }
+};
+
+class Solution67
+{
+    bool FindInMatrix(int target,vector<vector<int>> matrix)
+    {
+        if(matrix.empty())
+        {
+            return false;  
+        }
+
+        for(int i=matrix.size()-1,j=0;i>=0&&j<matrix[0].size();)
+        {
+            if(target==matrix[i][j])
+            {
+                return true;
+            }
+            else
+            {
+                target<matrix[i][j]?i--:j++;
+            }
+            
+        }
+
+        return false;
+    }
+};
