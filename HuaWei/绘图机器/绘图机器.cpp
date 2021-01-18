@@ -58,7 +58,7 @@ unsigned int GetMinArea(int stopPoint, const vector<pair<int, int>> &operations)
         cury+=p.second;
     }
 
-    return res+=(stopPoint-curx)*abs(cury);
+    res+=(stopPoint-curx)*abs(cury);
     return res;
 }
 
