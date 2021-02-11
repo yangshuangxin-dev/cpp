@@ -471,3 +471,162 @@ public:
         return res;
     }
 };
+
+struct TreeNode
+{
+    int val;
+    struct TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+class Balance
+{
+public:
+    bool isBalance(TreeNode *root)
+    {
+        return getDep(root) != -1;
+    }
+
+    int getDep(TreeNode *root)
+    {
+        if (!root)
+        {
+            return 0;
+        }
+
+        auto left = getDep(root->left);
+        auto right = getDep(root->right);
+        if (left == -1 || right == -1)
+        {
+            return -1;
+        }
+
+        return abs(left - right) > 1 ? -1 : max(left, right) + 1;
+    }
+};
+
+struct UndirectedGraphNode
+{
+    int label;
+    vector<struct UndirectedGraphNode *> neighbors;
+    UndirectedGraphNode(int x) : label(x) {}
+};
+
+class Path
+{
+public:
+    bool checkPath(UndirectedGraphNode *a, UndirectedGraphNode *b)
+    {
+        return check(a, b) || check(b, a);
+    }
+
+    bool check(UndirectedGraphNode *a, UndirectedGraphNode *b)
+    {
+        if (a == nullptr || b == nullptr)
+        {
+            return false;
+        }
+
+        if (a == b)
+        {
+            return true;
+        }
+
+        if (a->label == -1)
+        {
+            return false;
+        }
+
+        a->label = -1;
+        for (int i = 0; i < a->neighbors.size(); i++)
+        {
+            if (check(a->neighbors[i], b))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
+
+class MinimalBST
+{
+public:
+    int buildMinimalBST(vector<int> vals)
+    {
+        int height = 0;
+        BuildMinimalBST(vals, 0, vals.size() - 1, height);
+        return height;
+    }
+
+    TreeNode *BuildMinimalBST(vector<int> &vals, int start, int end, int &height)
+    {
+        if (start > end)
+        {
+            height = 0;
+            return nullptr;
+        }
+
+        int mid = start + (end - start) / 2;
+        TreeNode *root = new TreeNode(vals[mid]);
+        int left = 0, right = 0;
+        root->left = BuildMinimalBST(vals, start, mid - 1, left);
+        root->right = BuildMinimalBST(vals, mid + 1, end, right);
+        height = (left >= right ? left : right) + 1;
+
+        return root;
+    }
+};
+
+class TreeLevel
+{
+    ListNode *ln = new ListNode(-1);
+    ListNode *p = ln;
+
+public:
+    ListNode *getTreeLevel(TreeNode *root, int dep)
+    {
+        if (root == nullptr || dep <= 0)
+        {
+            return nullptr;
+        }
+
+        if (dep == 1)
+        {
+            p->next = new ListNode(root->val);
+            p = p->next;
+        }
+        else
+        {
+            getTreeLevel(root->left, dep - 1);
+            getTreeLevel(root->right, dep - 1);
+        }
+
+        return ln->next;
+    }
+};
+
+class Checker
+{
+public:
+    bool checkBST(TreeNode *root)
+    {
+        return method2(root, INT_MIN, INT_MAX);
+    }
+
+    bool method2(TreeNode *root, int min, int max)
+    {
+        if (root == nullptr)
+        {
+            return true;
+        }
+
+        if (root->val < min || root->val > max)
+        {
+            return false;
+        }
+
+        return method2(root->left, min, root->val) && method2(root->right, root->val, max);
+    }
+};
