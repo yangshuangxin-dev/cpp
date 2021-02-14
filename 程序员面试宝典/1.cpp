@@ -630,3 +630,363 @@ public:
         return method2(root->left, min, root->val) && method2(root->right, root->val, max);
     }
 };
+
+class Successor
+{
+public:
+    int findSucc(TreeNode *root, int p)
+    {
+        bool sign = false;
+        return findSucc1(root, p, sign);
+    }
+
+    int findSucc1(TreeNode *root, int p, bool &sign)
+    {
+        if (root == nullptr)
+        {
+            return -1;
+        }
+
+        int left = findSucc1(root->left, p, sign);
+        if (left != -1)
+        {
+            return left;
+        }
+
+        if (sign == true)
+        {
+            return root->val;
+        }
+
+        if (root->val == p)
+        {
+            sign = true;
+        }
+
+        return findSucc1(root->right, p, sign);
+    }
+};
+
+class LCA
+{
+public:
+    int getLCA(int a, int b)
+    {
+        while (a != b)
+        {
+            if (a > b)
+            {
+                a /= 2;
+            }
+            else
+            {
+                b /= 2;
+            }
+        }
+
+        return a;
+    }
+};
+
+class BinInsert
+{
+public:
+    int binInsert(int n, int m, int j, int i)
+    {
+        m <<= j;
+        return n | m;
+    }
+};
+
+class BinDecimal
+{
+public:
+    string printBin(double num)
+    {
+        string str("0.");
+        double base = 0.5;
+        while (num > 0)
+        {
+            if (num >= base)
+            {
+                num -= base;
+                str += "1";
+            }
+            else
+            {
+                str += "0";
+            }
+            base /= 2;
+            if (str.size() >= 32)
+            {
+                str = "Error";
+                break;
+            }
+        }
+
+        return str;
+    }
+};
+
+class CloseNumber
+{
+public:
+    vector<int> getCloseNumber(int x)
+    {
+        // write code here
+        //int small = x & (- x);
+        //small = x - small + (small >> 1);
+        int small = x - 1;
+        int cnt = count_num(x);
+        while (count_num(small) != cnt)
+        {
+            --small;
+        }
+
+        int large = x + 1;
+        while (count_num(large) != cnt)
+        {
+            ++large;
+        }
+        return vector<int>({small, large});
+    }
+
+    int count_num(int x)
+    {
+        int cnt = 0;
+        while (x)
+        {
+            ++cnt;
+            x &= x - 1;
+        }
+        return cnt;
+    }
+};
+
+class TreansFrom
+{
+public:
+    int calcCost(int A, int B)
+    {
+        int res = A ^ B;
+        int count = 0;
+        while (res != 0)
+        {
+            count++;
+            res &= (res - 1);
+        }
+
+        return count;
+    }
+};
+
+class Exchange
+{
+public:
+    int exchangeOddEven(int x)
+    {
+        int oddVal = (x & 0xAAAAAAAA);
+        int evenVal = (x & 0x55555555);
+        return (oddVal >> 1) + (evenVal << 1);
+    }
+};
+
+class Finder
+{
+public:
+    int findMissing(vector<vector<int>> numbers, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (i % 2 != numbers[i][0])
+            {
+                return i;
+            }
+        }
+
+        return n;
+    }
+};
+
+class Render
+{
+public:
+    vector<int> renderPixel(vector<int> screen, int x, int y)
+    {
+        for (int i = x; i < y; i++)
+        {
+            int k = i % 8;
+            int t = i / 8;
+            screen[t] = screen[t] | (1 << k);
+        }
+
+        return screen;
+    }
+};
+
+class Ants
+{
+public:
+    double antsCollision(int n)
+    {
+        return (1.0 - (1.0 / (1 << (n - 1))));
+    }
+};
+
+class CrossLine
+{
+public:
+    bool checkCrossLine(double s1, double s2, double y1, double y2)
+    {
+        return s1 != s2 || y1 == y2;
+    }
+};
+
+class AddSubstitution
+{
+public:
+    int calc(int a, int b, int tpye)
+    {
+        int res = 0;
+        int count = 0;
+        int tmp = 0;
+        switch (tpye)
+        {
+        case 1:
+            tmp = 0;
+            for (int i = 0; i < b; i++)
+            {
+                tmp += a;
+            }
+            res = tmp;
+            break;
+        case 0:
+            tmp = a;
+            count = 0;
+            while (tmp > 0 && tmp > b)
+            {
+                tmp = tmp + (~b) + 1;
+                count++;
+            }
+            res = count;
+            break;
+
+        case -1:
+            res = a + (~b) + 1;
+            break;
+        default:
+            break;
+        }
+
+        return res;
+    }
+};
+
+struct Point
+{
+    int x;
+    int y;
+    Point() : x(0), y(0) {}
+    Point(int xx, int yy)
+    {
+        x = xx;
+        y = yy;
+    }
+};
+
+class Bipartition
+{
+public:
+    vector<double> getBipartition(vector<Point> A, vector<Point> B)
+    {
+        double x1 = (A[0].x + A[2].x) / 2;
+        double x2 = (B[0].x + B[2].x) / 2;
+        double y1 = (A[0].y + A[2].y) / 2;
+        double y2 = (B[0].y + B[2].y) / 2;
+
+        double s = (y1 - y2) / (x1 - x2);
+        double y = y1 - s * x1;
+
+        vector<double> ans;
+        ans.emplace_back(s);
+        ans.emplace_back(y);
+        return ans;
+    }
+};
+
+class DeseLine
+{
+public:
+    vector<double> getLine(vector<Point> p, int n)
+    {
+        map<pair<double, double>, int> lines;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                ++lines[calLine(p[i], p[j])];
+            }
+        }
+
+        auto it = lines.begin();
+        auto maxLine = it;
+        int max = 0;
+        while (it != lines.end())
+        {
+            if (it->second > max)
+            {
+                maxLine = it;
+            }
+            it++;
+        }
+
+        vector<double> res;
+        res.emplace_back(maxLine->first.first);
+        res.emplace_back(maxLine->first.second);
+        return res;
+    }
+
+    pair<double, double> calLine(Point p1, Point p2)
+    {
+        double k = (double)(p1.y - p2.y) / (double)(p1.x - p2.x);
+        double s = (double)p1.y - (double)k * p1.x;
+        return make_pair(k, s);
+    }
+};
+
+class KthNumber
+{
+public:
+    int findKth(int k)
+    {
+        if (k < 1)
+        {
+            return 0;
+        }
+
+        vector<int> nums(k + 1);
+        nums[0] = 1;
+        int n3 = 0, n5 = 0, n7 = 0, i = 0;
+        while (i < k)
+        {
+            i++;
+            nums[i] = min(nums[n3] * 3, min(nums[n5] * 5, nums[n7] * 7));
+            if (nums[i] == nums[n3] * 3)
+            {
+                n3++;
+            }
+
+            if (nums[i] == nums[n5] * 5)
+            {
+                n5++;
+            }
+
+            if (nums[i] == nums[n7] * 7)
+            {
+                n7++;
+            }
+        }
+
+        return nums[i];
+    }
+};
