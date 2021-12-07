@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <functional>
 using namespace std;
 class Solution
 {
@@ -9,7 +8,7 @@ public:
         if (k == special.size())
             return inner_product(begin(needs), end(needs), begin(price), cost);
         int ret = shoppingOffers(price, special, needs, cost, k + 1);
-        if (!inner_product(begin(needs), end(needs), begin(special[k]), false, bit_or(), less()))
+        if (!inner_product(begin(needs), end(needs), begin(special[k]), false, bit_or<int>(), less()))
         {
             transform(begin(needs), end(needs), begin(special[k]), begin(needs), minus());
             ret = min(ret, shoppingOffers(price, special, needs, cost + special[k].back(), k));
